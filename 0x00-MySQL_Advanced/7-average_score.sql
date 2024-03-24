@@ -1,14 +1,20 @@
--- This script compute the average score of a student
-DELIMITER @@
-CREATE PROCEDURE ComputeAverageScoreForUser(
-	IN user_id INT
+-- this script compute in store a student average
+DELIMITER //
+
+CREATE PROCEDURE ComputeAverageScoreForUser (
+    IN p_user_id INT
 )
 BEGIN
-	DECLARE user_score FLOAT;
-	SELECT AVG(score) INTO user_score FROM corrections WHERE user_id = user_id;
+    DECLARE avg_score FLOAT;
 
-	-- update the user score
-	UPDATE users SET average_score = user_score WHERE id = user_id;
+    -- Compute average score
+    SELECT AVG(score) INTO avg_score
+    FROM corrections
+    WHERE user_id = p_user_id;
+
+    -- Update or insert average score for the user
+    UPDATE users SET average_score = avg_score WHERE id = p_user_id;
 END;
-@@
+//
+
 DELIMITER ;
