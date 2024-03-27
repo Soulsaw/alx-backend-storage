@@ -3,7 +3,7 @@
 
 
 def top_students(mongo_collection):
-    """"""
+    """Document the function"""
     pipeline = [
         {
             "$unwind": "$topics"
@@ -11,15 +11,15 @@ def top_students(mongo_collection):
         {
             "$group": {
                 "_id": "$_id",
-                "name": "name",
+                "name": {"$first": "$name"},
                 "averageScore": {"$avg": "$topics.score"}
             }
         },
         {
             "$project": {
-                "_id": "$_id",
-                "averageScore": 1,
-                "_id": 0
+                "_id": 1,
+                "name": 1,
+                "averageScore": 1
             }
         },
         {
