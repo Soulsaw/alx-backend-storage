@@ -10,14 +10,15 @@ def top_students(mongo_collection):
         },
         {
             "$group": {
-                "_id": "$name",
+                "_id": "$_id",
+                "name": {"$first": "$name"},
                 "averageScore": {"$avg": "$topics.score"}
             }
         },
         {
             "$project": {
                 "_id": 1,
-                "name": "$_id",
+                "name": 1,
                 "averageScore": 1
             }
         },
