@@ -1,0 +1,6 @@
+// This scrip insert a document in the collection scholl
+db.school.insertOne(
+    {
+        "name" : "Holberton school"
+    }
+)
