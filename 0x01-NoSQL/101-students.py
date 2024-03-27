@@ -3,7 +3,7 @@
 
 
 def top_students(mongo_collection):
-    """"""
+    """Document the function"""
     pipeline = [
         {
             "$unwind": "$topics"
