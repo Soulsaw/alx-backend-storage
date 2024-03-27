@@ -1,0 +1,2 @@
+// This script create or use a mongodb
+use my_db
