@@ -28,6 +28,7 @@ def get_page(url: str) -> str:
 
     return content
 
+
 # Example Usage
 url = "http://slowwly.robertomurray.co.uk"
 start_time = time.time()
