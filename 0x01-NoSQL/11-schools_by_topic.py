@@ -4,5 +4,5 @@
 
 def schools_by_topic(mongo_collection, topic):
     """Doc of the function"""
-    document = mongo_collection.insert_one(topic)
-    return document.inserted_id
+    documents = mongo_collection.find({"topics": topic})
+    return documents
