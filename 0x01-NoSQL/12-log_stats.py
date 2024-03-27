@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Doc module"""
 from pymongo import MongoClient
-"""Doc import"""
+"""Doc import modele"""
 
 
 def get_logs_stats(collection):
