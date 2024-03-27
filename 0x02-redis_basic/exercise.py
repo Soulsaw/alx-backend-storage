@@ -1,9 +1,21 @@
 #!/usr/bin/env python3
 """Doc module"""
+from functools import wraps
 import redis
 import uuid
 from typing import Union, Callable, Optional
 """Import doc"""
+
+
+def count_call(method: Callable) -> Callable:
+    """Create and return a Callable"""
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """The callable method"""
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+    return wrapper
 
 
 class Cache:
@@ -13,6 +25,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb(True)
 
+    @count_call
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store method that store the data"""
         key = str(uuid.uuid4())
