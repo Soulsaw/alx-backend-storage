@@ -3,20 +3,20 @@
 from pymongo import MongoClient
 
 
-def get_logs_stats(mongo_collection):
+def get_logs_stats(collection):
     # Get total number of logs
-    total_logs = mongo_collection.count_documents({})
-
+    total_logs = collection.count_documents({})
     # Count logs by method
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     method_counts = {}
     for method in methods:
-        method_counts[method] = mongo_collection.count_documents({"method": method})
+        method_counts[method] = collection.count_documents({"method": method})
 
     # Count logs with method=GET and path=/status
-    status_check_count = mongo_collection.count_documents({"method": "GET", "path": "/status"})
+    s_count = collection.count_documents({"method": "GET", "path": "/status"})
 
-    return total_logs, method_counts, status_check_count
+    return total_logs, method_counts, s_count
+
 
 if __name__ == "__main__":
     # Connect to MongoDB
