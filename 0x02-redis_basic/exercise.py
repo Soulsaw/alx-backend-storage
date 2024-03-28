@@ -23,20 +23,19 @@ def call_history(method: Callable) -> Callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """# Initialize Redis client"""
-        redis_client = redis.Redis()
 
         # Create keys for input and output lists
         input_key = f"{method.__qualname__}:inputs"
         output_key = f"{method.__qualname__}:outputs"
 
         # Append input arguments to the input list
-        redis_client.rpush(input_key, str(args))
+        self._redis.rpush(input_key, str(args))
 
         # Execute the original method to retrieve the output
         output = method(self, *args, **kwargs)
 
         # Append the output to the output list
-        redis_client.rpush(output_key, output)
+        self._redis.rpush(output_key, output)
 
         return output
     return wrapper
