@@ -7,7 +7,7 @@ from typing import Union, Callable, Optional
 """Import doc"""
 
 
-def count_call(method: Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """Create and return a Callable"""
     @wraps(method)
     def wrapper(self, *args, **kwargs):
@@ -49,7 +49,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb(True)
 
-    @count_call
+    @count_calls
     @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store method that store the data"""
